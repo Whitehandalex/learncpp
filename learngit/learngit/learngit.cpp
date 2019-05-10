@@ -6,9 +6,9 @@
 
 int main()
 {
-	int i = 2;
+	int i = 4;
 	i = i + 2;
-	i = i / 6;//this is bad, because you need use '7'
+	i = i / 3;//this is bad, because you need use '7'
     std::cout << "Hello World!\n" << i << std::endl; 
 }
 
