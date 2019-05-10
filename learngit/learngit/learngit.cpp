@@ -8,7 +8,7 @@ int main()
 {
 	int i = 2;
 	i = i + 2;
-	i = i / 0;
+	i = i / 6;
     std::cout << "Hello World!\n" << i << std::endl; 
 }
 
