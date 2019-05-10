@@ -12,7 +12,7 @@ int main()
     std::cout << "Hello World!\n" << i << std::endl; 
 }
 
-// This is learn project for git  : 
+// It fixed by Whitehandalex  : 
 //   1. Use the Solution Explorer window to add/manage files
 //   2. Use the Team Explorer window to connect to source control
 //   3. Use the Output window to see build output and other messages
