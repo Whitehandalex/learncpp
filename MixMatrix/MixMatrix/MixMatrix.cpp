@@ -50,4 +50,16 @@ int main()
 	c.printElement(0, 0);
 	str.printElement(0, 0);
 	my.printElement(0, 0);
+	TemplMatrix<int, 3, 3> i2;
+	i2.add(1);
+	i2.add(1);
+	i2.add(1);
+	i2.add(1);
+	i2.add(1);
+	i2.add(1);
+	i2.add(1);
+	i2.add(1);
+	i2.add(1);
+	i2.add(1);
+	i2.printMatrix();
 }

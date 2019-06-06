@@ -4,10 +4,10 @@
 
 using namespace std;
 
-extern const int SIZE_X;
-extern const int SIZE_Y;
+//extern const int SIZE_X;
+//extern const int SIZE_Y;
 
-template <typename T>
+template <typename T,int SIZE_X = 2,int SIZE_Y = 2>
 class TemplMatrix
 {
 private:
@@ -21,12 +21,12 @@ public:
 	void printElement(int x, int y);
 };
 
-template<typename T>
-inline TemplMatrix<T>::TemplMatrix() : currentX(0), currentY(0), _data{}
+template<typename T, int SIZE_X, int SIZE_Y>
+inline TemplMatrix<T, SIZE_X, SIZE_Y>::TemplMatrix() : currentX(0), currentY(0), _data{}
 {}
 
-template<typename T>
-inline void TemplMatrix<T>::add(T data)
+template<typename T, int SIZE_X, int SIZE_Y>
+inline void TemplMatrix<T, SIZE_X, SIZE_Y>::add(T data)
 {
 	_data[currentX][currentY] = data;
 	if (currentY < (SIZE_Y - 1))
@@ -45,8 +45,8 @@ inline void TemplMatrix<T>::add(T data)
 
 }
 
-template<typename T>
-inline void TemplMatrix<T>::printMatrix()
+template<typename T, int SIZE_X, int SIZE_Y>
+inline void TemplMatrix<T, SIZE_X, SIZE_Y>::printMatrix()
 {
 	for (int i = 0;i < SIZE_X;i++)
 	{
@@ -59,8 +59,8 @@ inline void TemplMatrix<T>::printMatrix()
 	cout << endl;
 }
 
-template<typename T>
-inline void TemplMatrix<T>::printElement(int x, int y)
+template<typename T, int SIZE_X, int SIZE_Y>
+inline void TemplMatrix< T, SIZE_X, SIZE_Y>::printElement(int x, int y)
 {
 	cout << _data[x][y] << endl;
 }

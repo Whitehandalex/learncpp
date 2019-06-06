@@ -12,4 +12,3 @@ ostream & operator<<(ostream & s, UserType & obj)
 	s << obj._first << obj._second;
 	return s;
 }
-
