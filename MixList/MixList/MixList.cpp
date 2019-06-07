@@ -2,12 +2,13 @@
 #include <iostream>
 #include "List.h"
 #include "MixList.h"
+#include "DataTypes.h"
 
 using namespace std;
 
 int main()
 {
-	List i;
+	/*List i;
 	i.push_front(1);
 	i.push_front(2);
 	i.push_front(3);
@@ -30,5 +31,11 @@ int main()
 	c.push_front('c');
 	c.push_back('d');
 	c.push_back('e');
-	c.print();
+	c.print();*/
+	MixList<DataTypes> d;
+	d.push_front(1);
+	d.push_front(2);
+	d.push_front(3);
+	d.push_front(4);
+	d.print();
 }
