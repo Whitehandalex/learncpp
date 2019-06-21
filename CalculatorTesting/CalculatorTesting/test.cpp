@@ -3,19 +3,12 @@
 
 TEST(CalculatorTests, Can_enter_string) 
 {
+	cout << "Enter the test combination \"1234 567890\":" << endl;
 	Calculator calculator;
 	string actual = calculator.getValues();
-	string test = "1 2";
+	string test = "1234 567890";
 	ASSERT_EQ(actual, test);
 }
-
-TEST(CalculatorTests, isStringEmpty)
-{
-	Calculator calculator;
-	string actual = calculator.getValues();
-	ASSERT_EQ(actual.size(), 0);
-}
-
 
 TEST(CalculatorTests, isNumbers)
 {
