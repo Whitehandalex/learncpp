@@ -24,7 +24,7 @@ bool Calculator::checkValues(string values)
 	bool isNumbers = false;
 	for (int i = 0; i < values.size();i++)
 	{
-		if (values.at(i) != ' ' && (values.at(i) < 47 || values.at(i) > 58))
+		if (values.at(i) != ' ' && (values.at(i) < 48 || values.at(i) > 57))
 		{
 			isNumbers = false;
 			break;
@@ -37,12 +37,63 @@ bool Calculator::checkValues(string values)
 	return isNumbers;
 }
 
-int Calculator::convertValuesToInt(string value)
+int Calculator::calculation(string values)
 {
-	return 0;
+	int quantity_of_members = 0;
+	bool flag = false;
+	for (int i = 0;i < values.length();i++)
+	{
+		if (values[i] != ' ' && flag == false)
+		{
+			quantity_of_members++;
+			flag = true;
+		}
+		else if(values[i] == ' ')
+		{
+			flag = false;
+		}
+	}
+	return quantity_of_members;
 }
 
-int Calculator::calc(int value_1, int value_2)
+int Calculator::convertValueToInt(string value)
 {
-	return 0;
+	int value_int = 0;
+	for (int i = 0;i < value.size(); i++)
+	{
+		value_int += ((int)value.at(i) - 48)*pow(10, (value.size() - i - 1));
+	}
+	return value_int;
+}
+
+int Calculator::calc()
+{
+	int sum = 0;
+	Calculator calculator;
+	string values = calculator.getValues();
+	while (!(calculator.checkValues(values)))
+	{
+		cout << "The string contains incorrect symbols, please try again:" << endl;
+		values = calculator.getValues();
+	}
+	int counter = 0;
+	string value;
+	while (counter < values.length())
+	{
+		if (values[counter] != ' ')
+		{
+			while (counter < values.length() && values[counter] != ' ')
+			{
+				value += values[counter];
+				counter++;
+			}
+			sum += calculator.convertValueToInt(value);
+			value = "";
+		}
+		else
+		{
+			counter++;
+		}
+	}
+	return sum;
 }

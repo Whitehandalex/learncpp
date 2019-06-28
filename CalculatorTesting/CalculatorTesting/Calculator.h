@@ -10,7 +10,8 @@ public:
 	~Calculator();
 	string getValues();
 	bool checkValues(string values);
-	int convertValuesToInt(string value);
-	int calc(int value_1, int value_2);
+	int calculation(string values);
+	int convertValueToInt(string value);
+	int calc();
 };
 
