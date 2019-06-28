@@ -9,9 +9,8 @@ class MixList
 {
 private:
 	template <typename T>
-	class MixBlock
+	struct MixBlock
 	{
-	public:
 		T _data;
 		MixBlock<T>* _next;
 	};
@@ -26,6 +25,7 @@ public:
 	int get_size();
 	void pop_front();
 	void clear();
+	T& operator [](int index);
 };
 
 template<typename T>
@@ -51,16 +51,26 @@ inline void MixList<T>::push_front(T data)
 template<typename T>
 inline void MixList<T>::push_back(T data)
 {
-	MixBlock<T>* newLast = new MixBlock<T>;
-	newLast->_data = data;
-	newLast->_next = nullptr;
-	MixBlock<T>* last = _first;
-	while (last->_next)
+	if (_first)
 	{
-		last = last->_next;
+		MixBlock<T>* newLast = new MixBlock<T>;
+		newLast->_data = data;
+		newLast->_next = nullptr;
+		MixBlock<T>* last = _first;
+		while (last->_next)
+		{
+			last = last->_next;
+		}
+		last->_next = newLast;
+		_size++;
 	}
-	last->_next = newLast;
-	_size++;
+	else
+	{
+		MixBlock<T>* newLast = new MixBlock<T>;
+		_first = newLast;
+		_first->_data = data;
+		_first->_next = nullptr;
+	}
 }
 
 template<typename T>
@@ -96,5 +106,27 @@ inline void MixList<T>::clear()
 	while (_first)
 	{
 		pop_front();
+	}
+}
+
+template<typename T>
+inline T & MixList<T>::operator[](int index)
+{
+	
+	if (_size - index > 0)
+	{
+		int counter = 0;
+		MixBlock<T>* current = _first;
+		while (index-counter)
+		{
+			counter++;
+			current = current->_next;
+		}
+		return current->_data;
+	}
+	else
+	{
+		cout << "The List don't have as many elements, \ntry to use index with less value" << endl;
+		exit(0);
 	}
 }

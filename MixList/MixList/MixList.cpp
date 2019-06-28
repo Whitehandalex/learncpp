@@ -2,7 +2,7 @@
 #include <iostream>
 #include "List.h"
 #include "MixList.h"
-#include "DataTypes.h"
+#include "Data.h"
 
 using namespace std;
 
@@ -32,10 +32,16 @@ int main()
 	c.push_back('d');
 	c.push_back('e');
 	c.print();*/
-	MixList<DataTypes> d;
-	d.push_front(1);
-	d.push_front(2);
-	d.push_front(3);
-	d.push_front(4);
-	d.print();
+	MixList<Data*> t;
+	int v = 2;
+	Data *val = new Data(1, &v);
+	t.push_back(val);
+	char c = '@';
+	val = new Data(2, &c);
+	t.push_back(val);
+	Data *elem = t[0];
+	if (elem->getCode() == 1)
+		cout << *((int*)elem->getData());
+	else if (elem->getCode() == 2)
+		cout << *((char*)elem->getData());
 }
