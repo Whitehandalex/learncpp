@@ -12,6 +12,6 @@ public:
 	bool checkValues(string values);
 	int calculation(string values);
 	int convertValueToInt(string value);
-	int calc();
+	int calc(string source);
 };
 
