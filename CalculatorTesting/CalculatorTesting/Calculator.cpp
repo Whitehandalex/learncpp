@@ -11,15 +11,15 @@ Calculator::~Calculator()
 {
 }
 
-string Calculator::getValues()
+/*string Calculator::getValues()
 {
 	string values;
 	cout << "Enter numbers separated with space to get sum:" << endl;
 	getline(cin, values);
 	return values;
-}
+}*/
 
-bool Calculator::checkValues(string values)
+/*bool Calculator::checkValues(string values)
 {
 	bool isNumbers = false;
 	if (values[0] == '/' && values[1] == '/')
@@ -70,9 +70,9 @@ bool Calculator::checkValues(string values)
 		}
 	}
 	return isNumbers;
-}
+}*/
 
-int Calculator::calculation(string values)
+/*int Calculator::calculation(string values)
 {
 	int quantity_of_members = 0;
 	bool flag = false;
@@ -89,7 +89,7 @@ int Calculator::calculation(string values)
 		}
 	}
 	return quantity_of_members;
-}
+}*/
 
 int Calculator::convertValueToInt(string value)
 {
@@ -104,41 +104,79 @@ int Calculator::convertValueToInt(string value)
 int Calculator::calc(string source)
 {
 	int sum = 0;
-	if (checkValues(source))
+	int counter = 0;
+	vector<string> store;
+	string temp = "";
+	while (counter < source.size())
 	{
-		int counter = 0;
-		vector<string> store;
-		string temp = "";
-		while (counter<source.size())
+		if (counter == 0 && source[0] == '/' && source[1] == '/')
 		{
-			if (source[counter] <= '9' && source[counter] >= '0')
+			if (source.size() > 2 && source[2] >= '0' && source[2] <= '9')
 			{
-				temp += source[counter];
+				return -1;
 			}
-			else if(temp.size())
+			else if (source.size() > 2)
 			{
-				store.push_back(temp);
-				temp = "";
+				if (source[3] >= '0' && source[3] <= '9')
+				{
+					for (int i = 3;i < source.size();i++)
+					{
+						if (source[i] == source[2])
+						{
+							source[i] = ' ';
+						}
+						else if (!(source[i] >= '0' && source[i] <= '9') && source[i] != source[2])
+						{
+							return -1;
+						}
+					}
+				}
+				else
+				{
+					for (int i = 2;source[i] != '\n';i++)
+					{
+						for (int j = 4;j < source.size();j++)
+						{
+							if (source[j] == source[i])
+							{
+								source[j] = ' ';
+							}
+						}
+					}
+				}
+				for (int i = 0;source[i] <= '0' || source[i] >= '9';i++)
+				{
+					source[i] = ' ';
+				}
 			}
-			counter++;
 		}
-		if (temp.size())
+		if (source[counter] >= '0' && source[counter] <= '9')
+		{
+			temp += source[counter];
+		}
+		else if ((source[counter] == ' ' || source[counter] == ',') && temp.size())
 		{
 			store.push_back(temp);
+			temp = "";
 		}
-		for (string c : store)
+		else if(!(source[counter] >= '0' && source[counter] <= '9') && source[counter] != ' ' && source[counter] != ',')
 		{
-			sum += convertValueToInt(c);
+			return -1;
 		}
-		return sum;
+		counter++;
 	}
-	else
+	if (temp.size())
 	{
-		return -1;
+		store.push_back(temp);
 	}
+	for (string c : store)
+	{
+		sum += convertValueToInt(c);
+	}
+	return sum;
 }
 
-/*t Calculator::calc()
+/* Calculator::calc()
 {
 	int sum = 0;
 	Calculator calculator;

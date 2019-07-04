@@ -11,39 +11,39 @@
 	ASSERT_EQ(actual, test);
 }
 */
-TEST(CalculatorTests, isNumbers)
+/*TEST(CalculatorTests, isNumbers)
 {
 	Calculator calculator;
 	string test = "1 2";
 	bool isNumbers = calculator.checkValues(test);
 	ASSERT_TRUE(isNumbers);
-}
+}*/
 
-TEST(CalculatorTests, isNotNumbers)
+/*TEST(CalculatorTests, isNotNumbers)
 {
 	Calculator calculator;
 	string test = "1s2";
 	bool isNumbers = calculator.checkValues(test);
 	ASSERT_TRUE(!isNumbers);
-}
+}*/
 
-TEST(CalculatorTests, calculation_of_members)
+/*TEST(CalculatorTests, calculation_of_members)
 {
 	Calculator calculator;
 	string test = " 145 34  65 6  35346";
 	int number = 5;
 	int actual = calculator.calculation(test);
 	ASSERT_EQ(actual, number);
-}
+}*/
 
-TEST(CalculatorTests, convertation)
+/*TEST(CalculatorTests, convertation)
 {
 	Calculator calculator;
 	string test = "145";
 	int number = 145;
 	int actual = calculator.convertValueToInt(test);
 	ASSERT_EQ(actual, number);
-}
+}*/
 /*
 TEST(CalculatorTests, calc_func)
 {
@@ -166,6 +166,24 @@ TEST(CalculatorTests, FewDelimeters_n)
 	Calculator calculator;
 	string source = "//#\n\n20\n30#1";
 	int expected = -1;
+	int actual = calculator.calc(source);
+	ASSERT_EQ(actual, expected);
+}
+
+TEST(CalculatorTests, Few_signs)
+{
+	Calculator calculator;
+	string source = "//#\n1";
+	int expected = 1;
+	int actual = calculator.calc(source);
+	ASSERT_EQ(actual, expected);
+}
+
+TEST(CalculatorTests, Few_numbers)
+{
+	Calculator calculator;
+	string source = "1";
+	int expected = 1;
 	int actual = calculator.calc(source);
 	ASSERT_EQ(actual, expected);
 }
