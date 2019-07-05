@@ -170,22 +170,5 @@ TEST(CalculatorTests, FewDelimeters_n)
 	ASSERT_EQ(actual, expected);
 }
 
-TEST(CalculatorTests, Few_signs)
-{
-	Calculator calculator;
-	string source = "//#\n1";
-	int expected = 1;
-	int actual = calculator.calc(source);
-	ASSERT_EQ(actual, expected);
-}
-
-TEST(CalculatorTests, Few_numbers)
-{
-	Calculator calculator;
-	string source = "1";
-	int expected = 1;
-	int actual = calculator.calc(source);
-	ASSERT_EQ(actual, expected);
-}
 
 
