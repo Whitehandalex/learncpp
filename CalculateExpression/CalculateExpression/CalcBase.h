@@ -7,6 +7,8 @@ using namespace std;
 
 class CalcBase
 {
+private:
+	double division_and_multiplication();
 public:
 	int calc(string source);
 	CalcBase();

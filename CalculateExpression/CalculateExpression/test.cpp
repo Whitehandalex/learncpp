@@ -2,6 +2,7 @@
 #include "CalcBase.h"
 #include "CalcException.h"
 #include <string>
+#include "DivideByZeroException.h"
 
 using namespace std;
 
@@ -21,10 +22,13 @@ TEST(CalculateExpression, MinusTwoOperandShouldBeCorrectValue) {
 	int actual = c.calc(source);
 	ASSERT_EQ(actual, expected);
 }
+
 TEST(CalculateExpression, WrongParameterShouldBeException) {
 	CalcBase c;
 	string source = "20 + ";
-	ASSERT_THROW([&]() { c.calc(source); }, CalcException);
+	ASSERT_THROW(
+		c.calc(source),
+		CalcException);
 }
 
 TEST(CalculateExpression, ExpressionWithThreeOperandShouldBeCorrectValue) {
@@ -33,4 +37,18 @@ TEST(CalculateExpression, ExpressionWithThreeOperandShouldBeCorrectValue) {
 	int expected = 52;
 	int actual = c.calc(source);
 	ASSERT_EQ(actual, expected);
+}
+
+TEST(CalculateExpression, DivideZeroShouldBeException)
+{
+	CalcBase c;
+	string source = "12/0";
+	ASSERT_THROW(c.calc(source), DivideByZeroException);
+}
+
+TEST(CalculateExpression, DivideZeroAndPLusShouldBeException)
+{
+	CalcBase c;
+	string source = "12/0+5";
+	ASSERT_THROW(c.calc(source), DivideByZeroException);
 }

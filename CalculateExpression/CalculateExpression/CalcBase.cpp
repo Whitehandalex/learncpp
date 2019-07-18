@@ -2,6 +2,7 @@
 #include "CalcBase.h"
 #include <exception>
 #include "CalcException.h"
+#include "DivideByZeroException.h"
 
 int CalcBase::calc(string source)
 {
@@ -13,7 +14,7 @@ int CalcBase::calc(string source)
 	{
 		if (source.at(i) == ' ')
 		{
-			source.erase(i, 1);
+			continue;
 		}
 		if (!(source.at(i) <= '9' || source.at(i) >= '0') && !(source.at(i) == '+' || source.at(i) == '-' || source.at(i) == '*' || source.at(i) == '/'))
 		{
@@ -41,14 +42,22 @@ int CalcBase::calc(string source)
 				cout << "MISSTAKE more than one signs in a row" << endl;
 				throw CalcException();
 			}
-			if (source.at(i) == '*' || source.at(i) == '/')
+			if (signs.size() && (signs.top() == '*' || signs.top() == '/'))
 			{
-				if (signs.top() == '*' || signs.top() == '/')
+				if (signs.top() == '/')
 				{
-					if (signs.top() == '/')
-						last = 1 / numbers.top();
-					else
-						last = numbers.top();
+					if (numbers.top() == 0)
+					{
+						throw DivideByZeroException();
+					}
+					last = 1 / numbers.top();
+				}
+				else
+				{
+					last = numbers.top();
+				}
+				if (numbers.size())
+				{
 					numbers.pop();
 					numbers.push(numbers.top()*last);
 					signs.pop();
@@ -75,9 +84,17 @@ int CalcBase::calc(string source)
 	if (signs.top() == '*' || signs.top() == '/')
 	{
 		if (signs.top() == '/')
+		{
+			if (numbers.top() == 0)
+			{
+				throw DivideByZeroException();
+			}
 			last = 1 / numbers.top();
+		}
 		else
+		{
 			last = numbers.top();
+		}
 		numbers.pop();
 		int penult = numbers.top();
 		numbers.pop();
