@@ -52,3 +52,10 @@ TEST(CalculateExpression, DivideZeroAndPLusShouldBeException)
 	string source = "12/0+5";
 	ASSERT_THROW(c.calc(source), DivideByZeroException);
 }
+
+TEST(CalculateExpression, stringWithFunctionsShouldBeException)
+{
+	CalcBase c;
+	string source = "2+sin(90)+cos(90)";
+	ASSERT_THROW(c.calc(source), CalcException);
+}
