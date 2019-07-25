@@ -10,3 +10,4 @@ ExtendCalc::ExtendCalc()
 ExtendCalc::~ExtendCalc()
 {
 }
+

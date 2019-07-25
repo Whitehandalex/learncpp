@@ -3,6 +3,39 @@
 #include <exception>
 #include "CalcException.h"
 #include "DivideByZeroException.h"
+#include "ExtendCalc.h"
+
+int CalcBase::division_and_multiplication_preparation(char sign, int last_number)
+{
+	int last = 0;
+	if (sign == '/')
+	{
+		if (last_number == 0)
+		{
+			throw DivideByZeroException();
+		}
+		last = 1 / last_number;
+	}
+	else
+	{
+		last = last_number;
+	}
+	return last;
+}
+
+int CalcBase::covertToNumber(string expression)
+{
+	int number = 0;
+	for (int i = 0;i < expression.size();i++)
+	{
+		if (!(expression.at(i) <= '9' && expression.at(i) >= '0') && !(expression.at(i) == '+' || expression.at(i) == '-' || expression.at(i) == '*' || expression.at(i) == '/'))
+		{
+			throw CalcException();
+		}
+		number+= (int)(expression.at(i) - '0') * pow(10, expression.size() - 1 - i);
+	}
+	return number;
+}
 
 int CalcBase::calc(string source)
 {
@@ -16,46 +49,17 @@ int CalcBase::calc(string source)
 		{
 			continue;
 		}
-		if (!(source.at(i) <= '9' || source.at(i) >= '0') && !(source.at(i) == '+' || source.at(i) == '-' || source.at(i) == '*' || source.at(i) == '/'))
-		{
-			cout << "MISSTAKE wrong symbol" << endl;
-			throw CalcException();
-		}
-		if (source.at(i) >= '0' && source.at(i) <= '9')
+		if (!(source.at(i) == '*' || source.at(i) == '/' || source.at(i) == '+' || source.at(i) == '-'))
 		{
 			temp += source.at(i);
 		}
-		else if (source.at(i) == '*' || source.at(i) == '/' || source.at(i) == '+' || source.at(i) == '-')
+		else if ((source.at(i) == '*' || source.at(i) == '/' || source.at(i) == '+' || source.at(i) == '-') && temp.size())
 		{
-			if (temp.size())
+			numbers.push(covertToNumber(temp));
+			temp = "";
+			if (!(signs.empty()) && (signs.top() == '*' || signs.top() == '/'))
 			{
-				int number = 0;
-				for (int i = 0;i < temp.size();i++)
-				{
-					number += (int)(temp.at(i) - '0') * pow(10, temp.size() - 1 - i);
-				}
-				numbers.push(number);
-				temp = "";
-			}
-			else
-			{
-				cout << "MISSTAKE more than one signs in a row" << endl;
-				throw CalcException();
-			}
-			if (signs.size() && (signs.top() == '*' || signs.top() == '/'))
-			{
-				if (signs.top() == '/')
-				{
-					if (numbers.top() == 0)
-					{
-						throw DivideByZeroException();
-					}
-					last = 1 / numbers.top();
-				}
-				else
-				{
-					last = numbers.top();
-				}
+				last = division_and_multiplication_preparation(signs.top(), numbers.top());
 				if (numbers.size())
 				{
 					numbers.pop();
@@ -65,36 +69,23 @@ int CalcBase::calc(string source)
 			}
 			signs.push(source.at(i));
 		}
+		else
+		{
+			throw CalcException();
+		}
 	}
 	if (temp.size())
-	{
-		int number = 0;
-		for (int i = 0;i < temp.size();i++)
-		{
-			number += (int)(temp.at(i) - '0') * pow(10, temp.size() - 1 - i);
-		}
-		numbers.push(number);
+	{		
+		numbers.push(covertToNumber(temp));
 		temp = "";
 	}
 	if (numbers.size() == signs.size())
 	{
-		cout << "MISSTAKE the last symbol is sign" << endl;
 		throw CalcException();
 	}
 	if (signs.top() == '*' || signs.top() == '/')
 	{
-		if (signs.top() == '/')
-		{
-			if (numbers.top() == 0)
-			{
-				throw DivideByZeroException();
-			}
-			last = 1 / numbers.top();
-		}
-		else
-		{
-			last = numbers.top();
-		}
+		last = division_and_multiplication_preparation(signs.top(), numbers.top());
 		numbers.pop();
 		int penult = numbers.top();
 		numbers.pop();

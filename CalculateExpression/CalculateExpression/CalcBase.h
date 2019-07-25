@@ -8,7 +8,9 @@ using namespace std;
 class CalcBase
 {
 private:
-	double division_and_multiplication();
+	int division_and_multiplication_preparation(char sign, int last_number);
+protected:
+	virtual int covertToNumber(string expression);
 public:
 	int calc(string source);
 	CalcBase();

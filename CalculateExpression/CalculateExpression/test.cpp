@@ -57,5 +57,6 @@ TEST(CalculateExpression, stringWithFunctionsShouldBeException)
 {
 	CalcBase c;
 	string source = "2+sin(90)+cos(90)";
-	ASSERT_THROW(c.calc(source), CalcException);
+	ASSERT_THROW(
+		c.calc(source), CalcException);
 }
