@@ -6,5 +6,6 @@ class ExtendCalc :
 public:
 	ExtendCalc();
 	virtual ~ExtendCalc();
+	int covertToNumber(string expression) override;
 };
 

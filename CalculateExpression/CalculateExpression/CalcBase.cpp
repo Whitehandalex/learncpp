@@ -83,7 +83,7 @@ int CalcBase::calc(string source)
 	{
 		throw CalcException();
 	}
-	if (signs.top() == '*' || signs.top() == '/')
+	if (!(signs.empty()) && (signs.top() == '*' || signs.top() == '/'))
 	{
 		last = division_and_multiplication_preparation(signs.top(), numbers.top());
 		numbers.pop();

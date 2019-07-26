@@ -37,12 +37,14 @@
     <ClInclude Include="CalcException.h" />
     <ClInclude Include="DivideByZeroException.h" />
     <ClInclude Include="ExtendCalc.h" />
+    <ClInclude Include="ExtendCalcException.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CalcBase.cpp" />
     <ClCompile Include="CalcException.cpp" />
     <ClCompile Include="ExtendCalc.cpp" />
+    <ClCompile Include="ExtendCalcException.cpp" />
     <ClCompile Include="ExtendCalcTest.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">
