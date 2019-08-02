@@ -3,6 +3,7 @@
 #include "ExtendCalc.h"
 #include <string>
 #include "ExtendCalcException.h"
+#include "DivideByZeroException.h"
 
 
 TEST(ExtendCalcTest, arithmeticExpressionShouldBeResult) {
@@ -58,5 +59,53 @@ TEST(ExtendCalcTest, arithmeticExpressionShouldBeResult2) {
 	int expected = 57;
 	ASSERT_EQ(actual, expected);
 }
+
+TEST(ExtendCalcTast, PlusTwoOperandShouldBeCorrectValue) {
+	ExtendCalc c;
+	string source = "12 + 20";
+	int expected = 32;
+	int actual = c.calc(source);
+	ASSERT_EQ(actual, expected);
+
+}
+
+TEST(ExtendCalcTast, MinusTwoOperandShouldBeCorrectValue) {
+	ExtendCalc c;
+	string source = "12 - 20";
+	int expected = -8;
+	int actual = c.calc(source);
+	ASSERT_EQ(actual, expected);
+}
+
+TEST(ExtendCalcTast, WrongParameterShouldBeException) {
+	ExtendCalc c;
+	string source = "20 + ";
+	ASSERT_THROW(
+		c.calc(source),
+		CalcException);
+}
+
+TEST(ExtendCalcTast, ExpressionWithThreeOperandShouldBeCorrectValue) {
+	ExtendCalc c;
+	string source = "12 + 20 * 2";
+	int expected = 52;
+	int actual = c.calc(source);
+	ASSERT_EQ(actual, expected);
+}
+
+TEST(ExtendCalcTast, DivideZeroShouldBeException)
+{
+	ExtendCalc c;
+	string source = "12/0";
+	ASSERT_THROW(c.calc(source), DivideByZeroException);
+}
+
+TEST(ExtendCalcTast, DivideZeroAndPLusShouldBeException)
+{
+	ExtendCalc c;
+	string source = "12/0+5";
+	ASSERT_THROW(c.calc(source), DivideByZeroException);
+}
+
 
 

@@ -23,6 +23,16 @@ int CalcBase::division_and_multiplication_preparation(char sign, int last_number
 	return last;
 }
 
+bool CalcBase::is_sign(char c)
+{
+	return (c == '*' || c == '/' || c == '+' || c == '-');
+}
+
+bool CalcBase::is_priority_sign(char c)
+{
+	return (c == '*' || c == '/');
+}
+
 int CalcBase::covertToNumber(string expression)
 {
 	int number = 0;
@@ -49,15 +59,15 @@ int CalcBase::calc(string source)
 		{
 			continue;
 		}
-		if (!(source.at(i) == '*' || source.at(i) == '/' || source.at(i) == '+' || source.at(i) == '-'))
+		if (!is_sign(source.at(i)))
 		{
 			temp += source.at(i);
 		}
-		else if ((source.at(i) == '*' || source.at(i) == '/' || source.at(i) == '+' || source.at(i) == '-') && temp.size())
+		else if (is_sign(source.at(i)) && temp.size())
 		{
 			numbers.push(covertToNumber(temp));
 			temp = "";
-			if (!(signs.empty()) && (signs.top() == '*' || signs.top() == '/'))
+			if (!(signs.empty()) && is_priority_sign(signs.top()))
 			{
 				last = division_and_multiplication_preparation(signs.top(), numbers.top());
 				if (numbers.size())
@@ -83,7 +93,7 @@ int CalcBase::calc(string source)
 	{
 		throw CalcException();
 	}
-	if (!(signs.empty()) && (signs.top() == '*' || signs.top() == '/'))
+	if (!(signs.empty()) && is_priority_sign(signs.top()))
 	{
 		last = division_and_multiplication_preparation(signs.top(), numbers.top());
 		numbers.pop();
