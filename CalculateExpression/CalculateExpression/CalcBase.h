@@ -14,7 +14,10 @@ private:
 protected:
 	virtual int covertToNumber(string expression);
 public:
+	void dividing_or_multiplication(std::stack<char> &signs, int &last, std::stack<int> &numbers);
+	int last_operations(std::stack<char> &signs, int &last, std::stack<int> &numbers);
 	int calc(string source);
+	void last_number_preparation(std::string &temp, std::stack<int> &numbers, std::stack<char> &signs, int &last);
 	CalcBase();
 	virtual ~CalcBase();
 };

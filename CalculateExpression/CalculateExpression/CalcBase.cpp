@@ -47,6 +47,40 @@ int CalcBase::covertToNumber(string expression)
 	return number;
 }
 
+void CalcBase::dividing_or_multiplication(std::stack<char> &signs, int &last, std::stack<int> &numbers)
+{
+	// операции деления или умножения
+	if (!(signs.empty()) && is_priority_sign(signs.top()))
+	{
+		last = division_and_multiplication_preparation(signs.top(), numbers.top());
+		if (numbers.size())
+		{
+			numbers.pop();
+			numbers.push(numbers.top()*last);
+			signs.pop();
+		}
+	}
+}
+
+int CalcBase::last_operations(std::stack<char> &signs, int &last, std::stack<int> &numbers)
+{
+	while (signs.size())
+	{
+		last = numbers.top();
+		numbers.pop();
+		if (signs.top() == '+')
+		{
+			numbers.top() += last;
+		}
+		else
+		{
+			numbers.top() -= last;
+		}
+		signs.pop();
+	}
+	return numbers.top();
+}
+
 int CalcBase::calc(string source)
 {
 	stack<int> numbers;
@@ -67,16 +101,7 @@ int CalcBase::calc(string source)
 		{
 			numbers.push(covertToNumber(temp));
 			temp = "";
-			if (!(signs.empty()) && is_priority_sign(signs.top()))
-			{
-				last = division_and_multiplication_preparation(signs.top(), numbers.top());
-				if (numbers.size())
-				{
-					numbers.pop();
-					numbers.push(numbers.top()*last);
-					signs.pop();
-				}
-			}
+			dividing_or_multiplication(signs, last, numbers);
 			signs.push(source.at(i));
 		}
 		else
@@ -84,8 +109,14 @@ int CalcBase::calc(string source)
 			throw CalcException();
 		}
 	}
+	last_number_preparation(temp, numbers, signs, last);
+	return last_operations(signs, last, numbers);
+}
+
+void CalcBase::last_number_preparation(std::string &temp, std::stack<int> &numbers, std::stack<char> &signs, int &last)
+{
 	if (temp.size())
-	{		
+	{
 		numbers.push(covertToNumber(temp));
 		temp = "";
 	}
@@ -102,21 +133,6 @@ int CalcBase::calc(string source)
 		numbers.push(penult*last);
 		signs.pop();
 	}
-	while (signs.size())
-	{
-		last = numbers.top();
-		numbers.pop();
-		if (signs.top() == '+')
-		{
-			numbers.top() += last;
-		}
-		else
-		{
-			numbers.top() -= last;
-		}
-		signs.pop();
-	}
-	return numbers.top();
 }
 
 CalcBase::CalcBase()
